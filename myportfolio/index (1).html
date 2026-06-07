@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Miriongi Wafula Moses — EE Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --border: #1e2d40;
+      --accent: #00d4ff;
+      --accent2: #f59e0b;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --mono: 'Share Tech Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,14,23,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--mono); color: var(--accent); font-size: 1rem; letter-spacing: .1em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 6rem 2.5rem 3rem;
+      position: relative; z-index: 1;
+    }
+    .hero-inner { max-width: 820px; }
+    .hero-tag {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: .85rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .hero-tag::before { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--accent); }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.05; margin-bottom: 1.5rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.75; max-width: 560px; margin-bottom: 2.5rem; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: .8rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.6rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
+      font-family: var(--mono);
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+    .btn-solid { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .btn-solid:hover { background: transparent; color: var(--accent); }
+    .btn-cv { border-color: var(--accent2); color: var(--accent2); }
+    .btn-cv:hover { background: var(--accent2); color: var(--bg); }
+
+    .hero-circuit { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); opacity: .12; width: min(420px, 42vw); }
+
+    /* SECTIONS */
+    section { padding: 5rem 2.5rem; position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+    .section-label { font-family: var(--mono); color: var(--accent); font-size: .78rem; letter-spacing: .25em; text-transform: uppercase; margin-bottom: .6rem; }
+    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text { color: #94a3b8; line-height: 1.8; margin-bottom: 1rem; }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .skill-chip {
+      font-family: var(--mono); font-size: .76rem; padding: .35rem .8rem;
+      border: 1px solid var(--border); color: var(--muted); background: var(--surface);
+      letter-spacing: .05em; transition: border-color .2s, color .2s;
+    }
+    .skill-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .exp-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 1.6rem; }
+    .exp-card h3 { font-size: 1rem; margin-bottom: .2rem; }
+    .exp-card .exp-company { color: var(--accent2); font-family: var(--mono); font-size: .8rem; letter-spacing: .06em; margin-bottom: .8rem; }
+    .exp-card ul { color: var(--muted); font-size: .88rem; line-height: 1.7; padding-left: 1.2rem; }
+    .exp-card ul li { margin-bottom: .3rem; }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; transition: border-color .2s, transform .2s; }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+    .project-card h3 { font-size: 1.05rem; margin-bottom: .6rem; }
+    .project-card p { color: var(--muted); font-size: .88rem; line-height: 1.65; }
+    .project-tags { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .project-tag { font-family: var(--mono); font-size: .7rem; padding: .2rem .55rem; background: rgba(0,212,255,.08); color: var(--accent); border: 1px solid rgba(0,212,255,.2); }
+
+    /* CONTACT */
+    .contact-box { background: var(--surface); border: 1px solid var(--border); padding: 3rem; max-width: 600px; }
+    .contact-box p { color: var(--muted); margin-bottom: 2rem; line-height: 1.7; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; color: var(--text); text-decoration: none; font-family: var(--mono); font-size: .88rem; padding: .8rem 1rem; border: 1px solid var(--border); transition: border-color .2s, color .2s; }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-link-icon { font-size: 1.1rem; min-width: 1.4rem; text-align: center; }
+
+    footer { text-align: center; padding: 2rem; font-family: var(--mono); font-size: .75rem; color: var(--muted); border-top: 1px solid var(--border); position: relative; z-index: 1; }
+
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .hero { padding: 5rem 1.2rem 2rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      section { padding: 3.5rem 1.2rem; }
+      .contact-box { padding: 1.8rem; }
+      .hero-circuit { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">MOSES_WAFULA</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <svg class="hero-circuit" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="50" y="50" width="300" height="300" rx="4" stroke="#00d4ff" stroke-width="1"/>
+      <line x1="50" y1="130" x2="350" y2="130" stroke="#00d4ff" stroke-width=".8"/>
+      <line x1="50" y1="210" x2="350" y2="210" stroke="#00d4ff" stroke-width=".8"/>
+      <line x1="50" y1="290" x2="350" y2="290" stroke="#00d4ff" stroke-width=".8"/>
+      <line x1="130" y1="50" x2="130" y2="350" stroke="#00d4ff" stroke-width=".8"/>
+      <line x1="210" y1="50" x2="210" y2="350" stroke="#00d4ff" stroke-width=".8"/>
+      <line x1="290" y1="50" x2="290" y2="350" stroke="#00d4ff" stroke-width=".8"/>
+      <circle cx="130" cy="130" r="6" fill="#00d4ff"/>
+      <circle cx="210" cy="130" r="4" stroke="#00d4ff" stroke-width="1.5"/>
+      <circle cx="290" cy="210" r="6" fill="#f59e0b"/>
+      <circle cx="130" cy="290" r="4" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="210" cy="210" r="8" stroke="#00d4ff" stroke-width="1.5"/>
+      <rect x="282" y="122" width="16" height="16" stroke="#00d4ff" stroke-width="1"/>
+      <rect x="122" y="202" width="16" height="16" stroke="#f59e0b" stroke-width="1"/>
+      <path d="M100 80 L130 80 L130 130" stroke="#00d4ff" stroke-width=".8"/>
+      <path d="M290 210 L340 210 L340 270" stroke="#f59e0b" stroke-width=".8"/>
+      <path d="M210 290 L210 340 L160 340" stroke="#00d4ff" stroke-width=".8"/>
+    </svg>
+
+    <div class="hero-inner fade-in">
+      <div class="hero-tag">Electrical &amp; Telecommunication Engineer</div>
+      <h1>Miriongi<br/>Wafula <span>Moses.</span></h1>
+      <p class="hero-sub">
+        Graduate engineer with hands-on experience in industrial automation, electrical systems,
+        maintenance, and embedded systems. Based in Nairobi, Kenya.
+      </p>
+      <div class="btn-row">
+        <a href="#projects" class="btn">View Projects</a>
+        <a href="#contact" class="btn btn-solid">Get in Touch</a>
+        <a href="cv.pdf" download="Miriongi_Wafula_Moses_CV.pdf" class="btn btn-cv">⬇ Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// 01 &nbsp; About</p>
+    <h2 class="section-title fade-in">Who I am</h2>
+    <div class="about-grid fade-in">
+      <div>
+        <p class="about-text">
+          I am a graduate in Electrical and Telecommunication Engineering from Multimedia University of Kenya,
+          with practical knowledge in industrial operations, electrical systems, automation, and instrumentation.
+        </p>
+        <p class="about-text">
+          I have experience troubleshooting electrical equipment, supporting maintenance activities,
+          and developing automation projects using Arduino and industrial control concepts.
+          Passionate about industrial energy systems, process optimization, and emerging technologies
+          in manufacturing and energy sectors.
+        </p>
+      </div>
+      <div>
+        <p style="color:var(--muted);font-size:.82rem;margin-bottom:1rem;font-family:var(--mono);letter-spacing:.1em;">CORE SKILLS</p>
+        <div class="skills-grid">
+          <span class="skill-chip">Industrial Automation</span>
+          <span class="skill-chip">Control Systems</span>
+          <span class="skill-chip">Preventive Maintenance</span>
+          <span class="skill-chip">Fault Diagnosis</span>
+          <span class="skill-chip">Electrical Distribution</span>
+          <span class="skill-chip">Electrical Wiring</span>
+          <span class="skill-chip">PLC Fundamentals</span>
+          <span class="skill-chip">Embedded Systems</span>
+          <span class="skill-chip">Root Cause Analysis</span>
+          <span class="skill-chip">AutoCAD Electrical</span>
+          <span class="skill-chip">Proteus</span>
+          <span class="skill-chip">KiCAD</span>
+          <span class="skill-chip">CODESYS</span>
+          <span class="skill-chip">Arduino</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// 02 &nbsp; Experience</p>
+    <h2 class="section-title fade-in">Work History</h2>
+    <div class="exp-list">
+
+      <div class="exp-card fade-in">
+        <h3>Maintenance Intern</h3>
+        <div class="exp-company">BURN MANUFACTURING COMPANY, Kiambu, Kenya &nbsp;|&nbsp; Feb 2026 — Present</div>
+        <ul>
+          <li>Preventive and corrective maintenance of industrial production machines to minimise downtime.</li>
+          <li>Troubleshooting electrical and mechanical faults in CNC laser cutting and press machines.</li>
+          <li>Supported installation and commissioning of CNC welding machines.</li>
+          <li>Inspected electrical connections, control panels, and machine components.</li>
+          <li>Participated in LPG stove leak testing and inspection using pressure decay equipment.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card fade-in">
+        <h3>Electrical &amp; Instrumentation Intern</h3>
+        <div class="exp-company">NATIONAL CEMENT COMPANY LTD, Athi River, Kenya &nbsp;|&nbsp; Jul 2023 — Sep 2024</div>
+        <ul>
+          <li>Maintenance of industrial electrical equipment including motors, control panels, and power distribution systems.</li>
+          <li>Monitored plant equipment performance and reported faults for corrective action.</li>
+          <li>Practical exposure to motor control systems, protection devices, and industrial automation.</li>
+          <li>Supported maintenance of conveyor systems and electrically driven production equipment.</li>
+          <li>Gained exposure to instrumentation and process control systems in cement production.</li>
+          <li>Read and interpreted electrical drawings and system layouts.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">// 03 &nbsp; Projects</p>
+    <h2 class="section-title fade-in">Sample Work</h2>
+    <div class="projects-grid">
+
+      <div class="project-card fade-in">
+        <span class="project-icon">⚡</span>
+        <h3>Automatic Phase Selector System</h3>
+        <p>Designed and implemented an automatic phase selector using Arduino and relay switching with LCD voltage monitoring and automatic load transfer functionality. Simulated and tested in Proteus.</p>
+        <div class="project-tags">
+          <span class="project-tag">Arduino</span>
+          <span class="project-tag">Proteus</span>
+          <span class="project-tag">Power Reliability</span>
+          <span class="project-tag">Relay Logic</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <span class="project-icon">🏭</span>
+        <h3>Industrial Automation Exposure</h3>
+        <p>Gained hands-on experience with PLC-based automation systems during internship at National Cement Company — including motor control, protection devices, and process control for cement production lines.</p>
+        <div class="project-tags">
+          <span class="project-tag">PLC</span>
+          <span class="project-tag">Motor Control</span>
+          <span class="project-tag">CODESYS</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <span class="project-icon">🔧</span>
+        <h3>CNC Machine Commissioning</h3>
+        <p>Supported installation and commissioning of CNC welding machines at Burn Manufacturing. Assisted in electrical connections, control panel inspection, and system testing for production readiness.</p>
+        <div class="project-tags">
+          <span class="project-tag">CNC Systems</span>
+          <span class="project-tag">Commissioning</span>
+          <span class="project-tag">Control Panels</span>
+        </div>
+      </div>
+
+      <div class="project-card fade-in">
+        <span class="project-icon">📐</span>
+        <h3>Electrical Drawing & Drafting</h3>
+        <p>Produced and interpreted electrical drawings and system layouts using AutoCAD Electrical and KiCAD for various industrial and academic projects, including wiring diagrams and PCB schematics.</p>
+        <div class="project-tags">
+          <span class="project-tag">AutoCAD Electrical</span>
+          <span class="project-tag">KiCAD</span>
+          <span class="project-tag">PCB Design</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">// 04 &nbsp; Contact</p>
+    <h2 class="section-title fade-in">Get in Touch</h2>
+    <div class="contact-box fade-in">
+      <p>Open to opportunities in electrical engineering, industrial automation, and maintenance roles. Feel free to reach out via any of the channels below.</p>
+      <div class="contact-links">
+        <a href="mailto:wafulamoses35@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          wafulamoses35@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/moses-wafula-b2a92a243" target="_blank" class="contact-link">
+          <span class="contact-link-icon">in</span>
+          linkedin.com/in/moses-wafula-b2a92a243
+        </a>
+        <a href="https://github.com/Wafulam" target="_blank" class="contact-link">
+          <span class="contact-link-icon">⌥</span>
+          github.com/Wafulam
+        </a>
+        <a href="tel:+254741201926" class="contact-link">
+          <span class="contact-link-icon">📞</span>
+          +254 741 201 926
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Miriongi Wafula Moses &nbsp;·&nbsp; Electrical &amp; Telecommunication Engineer &nbsp;·&nbsp; Nairobi, Kenya &nbsp;·&nbsp; &copy; 2026</p>
+  </footer>
+
+  <script>
+    const els = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
